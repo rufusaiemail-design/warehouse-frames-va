@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warehouse Frames 'n Gallery — Houston's Largest Frame Selection</title>
+  <meta name="description" content="Houston's largest selection of ready-made frames, custom framing, hand-carved frames, oil paintings, and framed mirrors. Family owned 27+ years. 3815 Fondren Rd, Houston TX 77063." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #C9A84C;
+      --gold-lt: #E2C572;
+      --black: #0D0D0D;
+      --dark: #151515;
+      --card: #1C1C1C;
+      --line: rgba(255,255,255,0.07);
+      --gold-line: rgba(201,168,76,0.18);
+      --mid: #5A5A5A;
+      --lt: #A0A0A0;
+      --display: 'Space Grotesk', system-ui, sans-serif;
+      --body: 'Inter', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--black); color: #fff; line-height: 1.6; overflow-x: hidden; }
+
+    /* ─── PREVIEW STRIP ─── */
+    .strip {
+      background: rgba(201,168,76,0.09);
+      border-bottom: 1px solid var(--gold-line);
+      text-align: center; padding: 0.45rem 1rem;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold); font-family: var(--body); font-weight: 500;
+    }
+
+    /* ─── TOP NAV ─── */
+    .topnav {
+      position: sticky; top: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 62px;
+      background: rgba(13,13,13,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo {
+      font-family: var(--display); font-size: 1.05rem; font-weight: 700;
+      color: #fff; text-decoration: none; letter-spacing: 0.01em; flex-shrink: 0;
+    }
+    .logo em { color: var(--gold); font-style: normal; }
+    .desktop-links {
+      display: flex; gap: 1.8rem; list-style: none;
+    }
+    .desktop-links a {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--lt); text-decoration: none; transition: color 0.2s;
+    }
+    .desktop-links a:hover { color: var(--gold); }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-call {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
+      color: var(--gold); text-decoration: none;
+      border: 1px solid var(--gold-line); padding: 0.45rem 1.1rem;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .nav-call:hover { background: var(--gold); color: var(--black); }
+
+    /* Hamburger */
+    .burger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .burger span {
+      display: block; width: 22px; height: 2px;
+      background: #fff; transition: all 0.3s;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+      display: none;
+      position: fixed; top: 0; right: 0; bottom: 0; width: 80%; max-width: 320px;
+      background: var(--dark); z-index: 400;
+      flex-direction: column;
+      transform: translateX(100%); transition: transform 0.3s ease;
+      border-left: 1px solid var(--gold-line);
+      overflow-y: auto;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .drawer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .drawer-logo { font-family: var(--display); font-size: 0.95rem; font-weight: 700; }
+    .drawer-logo em { color: var(--gold); font-style: normal; }
+    .drawer-close {
+      background: none; border: none; color: var(--lt); font-size: 1.4rem;
+      cursor: pointer; line-height: 1; padding: 0.2rem;
+    }
+    .drawer-links { list-style: none; padding: 1rem 0; flex: 1; }
+    .drawer-links li a {
+      display: block; padding: 0.85rem 1.5rem;
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--lt); text-decoration: none;
+      border-bottom: 1px solid var(--line); transition: color 0.2s;
+    }
+    .drawer-links li a:hover { color: var(--gold); }
+    .drawer-links li.section-head a {
+      color: #fff; font-weight: 600;
+    }
+    .drawer-cta {
+      padding: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .drawer-cta a {
+      display: block; text-align: center;
+      background: var(--gold); color: var(--black);
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none; padding: 0.85rem;
+    }
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 350;
+    }
+    .overlay.open { display: block; }
+
+    /* ─── CATEGORY NAV BAR ─── */
+    .catnav {
+      background: var(--card);
+      border-bottom: 1px solid var(--gold-line);
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .catnav::-webkit-scrollbar { display: none; }
+    .catnav-inner { display: flex; min-width: max-content; }
+    .catlink {
+      display: inline-block;
+      font-family: var(--body); font-size: 0.71rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--lt); text-decoration: none;
+      padding: 0.8rem 1.15rem; white-space: nowrap;
+      border-bottom: 2px solid transparent; transition: all 0.2s;
+    }
+    .catlink:hover { color: var(--gold); border-bottom-color: rgba(201,168,76,0.5); }
+    .catlink.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; display: flex; flex-direction: column;
+      min-height: 88vh;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('images/img_KhxjPBvb.jpg') center/cover no-repeat;
+      filter: brightness(0.22);
+    }
+    .hero-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,rgba(13,13,13,0.15) 0%,rgba(13,13,13,0.4) 55%,var(--black) 100%);
+    }
+    .hero-body {
+      position: relative; z-index: 2; flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 1.5rem 2.5rem;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.4rem;
+    }
+    .eyebrow::before, .eyebrow::after { content:''; width:28px; height:1px; background:var(--gold); opacity:0.5; }
+    .hero-h1 {
+      font-family: var(--display);
+      font-size: clamp(2.4rem, 5.5vw, 5rem);
+      font-weight: 700; line-height: 1.12; letter-spacing: 0.01em;
+      margin-bottom: 1.2rem; max-width: 780px;
+    }
+    .hero-h1 strong { color: var(--gold); font-weight: 700; }
+    .hero-p {
+      font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.62);
+      line-height: 1.8; max-width: 460px; margin: 0 auto 2.2rem;
+    }
+    .hero-ctas { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+
+    /* STATS BAR */
+    .stats {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--gold-line);
+    }
+    .stat {
+      padding: 1.5rem 0.5rem; text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-n {
+      display: block; font-family: var(--display);
+      font-size: 1.55rem; font-weight: 700; color: var(--gold);
+      line-height: 1; letter-spacing: 0.01em;
+    }
+    .stat-l {
+      display: block; font-size: 0.65rem; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--lt); margin-top: 0.4rem;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block; font-family: var(--body);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.09em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 0.85rem 1.8rem; transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-gold { background: var(--gold); color: var(--black); }
+    .btn-gold:hover { background: var(--gold-lt); }
+    .btn-ghost { border: 1px solid rgba(255,255,255,0.28); color: #fff; background: transparent; }
+    .btn-ghost:hover { border-color: #fff; }
+    .btn-black { background: var(--black); color: var(--gold); }
+    .btn-black:hover { background: #1a1a1a; }
+
+    /* ─── MARQUEE ─── */
+    .marquee { overflow: hidden; padding: 0.8rem 0; background: rgba(201,168,76,0.04); border-top: 1px solid var(--gold-line); border-bottom: 1px solid var(--gold-line); }
+    .mtrack { display: flex; gap: 2rem; white-space: nowrap; animation: marquee 32s linear infinite; }
+    .mitem { font-size: 0.66rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); opacity: 0.65; flex-shrink: 0; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ─── SECTIONS ─── */
+    .sec { padding: 5rem 2.5rem; }
+    .sec-alt { background: var(--dark); }
+    .wrap { max-width: 1160px; margin: 0 auto; }
+    .tag {
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.85rem;
+    }
+    .tag::after { content:''; width:20px; height:1px; background:var(--gold); opacity:0.45; }
+    h2 {
+      font-family: var(--display);
+      font-size: clamp(1.85rem, 3.3vw, 2.8rem);
+      font-weight: 700; line-height: 1.18; letter-spacing: 0.01em;
+      margin-bottom: 1rem;
+    }
+    h2 span { color: var(--gold); }
+    .body { font-size: 0.94rem; color: var(--lt); line-height: 1.82; max-width: 480px; }
+
+    /* ─── ABOUT ─── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .photos { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .photo-main { grid-column: span 2; height: 230px; overflow: hidden; }
+    .photo-sm { height: 160px; overflow: hidden; }
+    .photo-main img, .photo-sm img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s; }
+    .photo-main:hover img, .photo-sm:hover img { transform:scale(1.04); }
+    .pill {
+      display: inline-flex; align-items: center; gap: 1rem;
+      background: var(--gold); padding: 0.8rem 1.2rem; margin-top: 1.7rem;
+    }
+    .pill-n { font-family: var(--display); font-size: 1.75rem; font-weight: 700; color: var(--black); line-height: 1; }
+    .pill-l { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.62); line-height: 1.38; }
+    .hl { color: var(--gold); font-weight: 600; }
+
+    /* ─── CATEGORIES GRID ─── */
+    .cats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--line); }
+    .cat {
+      background: var(--card); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .cat-img { width:100%; height:190px; object-fit:cover; display:block; filter:brightness(0.78); transition:filter 0.35s,transform 0.4s; }
+    .cat:hover .cat-img { filter:brightness(0.95); transform:scale(1.03); }
+    .cat-body { padding: 1.2rem 1.1rem 1.4rem; flex: 1; }
+    .cat-n { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .cat-title { font-family: var(--display); font-size: 1.05rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem; letter-spacing: 0.01em; }
+    .cat-desc { font-size: 0.8rem; color: var(--lt); line-height: 1.65; }
+    .cat-line { display: block; width: 22px; height: 2px; background: var(--gold); margin-top: 0.9rem; transition: width 0.3s; }
+    .cat:hover .cat-line { width: 44px; }
+
+    /* ─── WHY ─── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .why-list { list-style: none; margin-top: 1.6rem; }
+    .why-row { display: flex; gap: 1rem; padding: 1.15rem 0; border-bottom: 1px solid var(--line); }
+    .why-row:last-child { border: none; }
+    .why-ico { flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.06rem; }
+    .why-t { font-family: var(--display); font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 0.2rem; letter-spacing: 0.01em; }
+    .why-d { font-size: 0.82rem; color: var(--lt); line-height: 1.65; }
+    .boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .box { background: var(--card); border: 1px solid var(--gold-line); padding: 1.6rem 1rem; text-align: center; }
+    .box.feat { background: var(--gold); border: none; grid-column: span 2; padding: 1.8rem; }
+    .box-n { font-family: var(--display); font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; letter-spacing: 0.01em; }
+    .box.feat .box-n { color: var(--black); font-size: 2.3rem; }
+    .box-l { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lt); margin-top: 0.4rem; }
+    .box.feat .box-l { color: rgba(0,0,0,0.6); }
+
+    /* ─── GALLERY ─── */
+    .gal {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 270px 210px;
+      gap: 4px;
+    }
+    .gi { overflow: hidden; position: relative; background: var(--card); }
+    .gi.tall { grid-row: span 2; }
+    .gi img { width:100%; height:100%; object-fit:cover; display:block; filter:brightness(0.85); transition:transform 0.5s,filter 0.3s; }
+    .gi:hover img { transform:scale(1.05); filter:brightness(1); }
+    .gc { position:absolute; bottom:0; left:0; right:0; padding:1rem 1rem 0.8rem; background:linear-gradient(transparent,rgba(0,0,0,0.72)); opacity:0; transition:opacity 0.3s; }
+    .gi:hover .gc { opacity:1; }
+    .gc span { font-size:0.66rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); }
+
+    /* ─── COMMERCIAL ─── */
+    .comm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .comm-wrap { position: relative; }
+    .comm-img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+    .comm-badge {
+      position: absolute; bottom: -1rem; right: -1rem;
+      background: var(--gold); padding: 1.1rem 1.4rem; text-align: center; min-width: 110px;
+    }
+    .cb-n { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--black); line-height: 1; }
+    .cb-l { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,0,0,0.65); margin-top: 0.2rem; }
+    .comm-list { list-style: none; margin-top: 1.4rem; }
+    .comm-item { display:flex; align-items:center; gap:0.7rem; padding:0.6rem 0; border-bottom:1px solid var(--line); font-size:0.88rem; color:var(--lt); }
+    .comm-item:last-child { border:none; }
+    .comm-item::before { content:''; width:5px; height:5px; background:var(--gold); flex-shrink:0; }
+
+    /* ─── VISIT ─── */
+    .visit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .visit-img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+
+    /* ─── CONTACT ─── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .cr { display:flex; gap:0.9rem; align-items:flex-start; margin-bottom:1.4rem; }
+    .cico { flex-shrink:0; width:36px; height:36px; border:1px solid var(--gold-line); display:flex; align-items:center; justify-content:center; }
+    .cico svg { width:14px; height:14px; stroke:var(--gold); }
+    .clbl { font-size:0.63rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--mid); font-weight:500; margin-bottom:0.2rem; }
+    .cval { font-size:0.92rem; color:#fff; }
+    .cval a { color:#fff; text-decoration:none; transition:color 0.2s; }
+    .cval a:hover { color:var(--gold); }
+    .hours { display:grid; grid-template-columns:auto 1fr; gap:0.28rem 0.9rem; font-size:0.84rem; }
+    .hday { color:var(--lt); }
+    .htime { color:#fff; font-weight:500; }
+    .form-box { background:var(--card); padding:1.8rem; border:1px solid var(--gold-line); }
+    .form-title { font-family:var(--display); font-size:1.25rem; font-weight:600; margin-bottom:1.3rem; letter-spacing:0.01em; }
+    .fg { margin-bottom:0.9rem; }
+    .fl { font-size:0.63rem; letter-spacing:0.13em; text-transform:uppercase; color:var(--lt); display:block; margin-bottom:0.38rem; font-weight:500; }
+    input, select, textarea {
+      width:100%; background:#222; border:1px solid rgba(255,255,255,0.07);
+      color:#fff; font-family:var(--body); font-size:0.86rem;
+      padding:0.72rem 0.85rem; outline:none; transition:border-color 0.2s; appearance:none;
+    }
+    input:focus, select:focus, textarea:focus { border-color:var(--gold); }
+    textarea { resize:vertical; min-height:80px; }
+    select option { background:#222; }
+    .fsub {
+      width:100%; background:var(--gold); color:var(--black);
+      font-family:var(--body); font-size:0.74rem; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase;
+      border:none; padding:0.85rem; cursor:pointer; transition:background 0.2s; margin-top:0.3rem;
+    }
+    .fsub:hover { background:var(--gold-lt); }
+
+    /* ─── MAP CTA ─── */
+    .mapcta { background:var(--gold); padding:3rem 2rem; text-align:center; }
+    .mapcta h2 { font-family:var(--display); font-size:clamp(1.4rem,2.6vw,2rem); font-weight:700; color:var(--black); margin-bottom:0.45rem; letter-spacing:0.01em; }
+    .mapcta p { font-size:0.93rem; color:rgba(0,0,0,0.6); margin-bottom:1.4rem; }
+
+    /* ─── FOOTER ─── */
+    footer { background:var(--black); border-top:1px solid var(--gold-line); padding:1.8rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.9rem; }
+    .foot-brand { font-family:var(--display); font-size:0.92rem; font-weight:700; letter-spacing:0.01em; }
+    .foot-brand em { color:var(--gold); font-style:normal; }
+    .foot-copy { font-size:0.7rem; color:var(--mid); text-align:center; }
+    .foot-links { display:flex; gap:1.4rem; list-style:none; }
+    .foot-links a { font-size:0.7rem; color:var(--mid); text-decoration:none; letter-spacing:0.07em; text-transform:uppercase; font-weight:500; transition:color 0.2s; }
+    .foot-links a:hover { color:var(--gold); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .cats { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 900px) {
+      .desktop-links { display: none; }
+      .burger { display: flex; }
+      .mobile-drawer { display: flex; }
+      .topnav { padding: 0 1.2rem; }
+      .sec { padding: 3.5rem 1.4rem; }
+      .about-grid, .comm-grid, .visit-grid, .contact-grid, .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .comm-wrap { overflow: visible; }
+      .comm-badge { position: static; display: inline-flex; gap: 0.7rem; align-items: center; margin-top: 1rem; }
+      .stats { grid-template-columns: repeat(2,1fr); }
+      .gal { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gi.tall { grid-row: span 1; }
+      footer { flex-direction:column; text-align:center; }
+    }
+    @media (max-width: 580px) {
+      .cats { grid-template-columns: 1fr; }
+      .boxes { grid-template-columns: 1fr; }
+      .box.feat { grid-column: span 1; }
+      .gal { grid-template-columns: 1fr; }
+      .mapcta { padding: 2.5rem 1.2rem; }
+      .photos { grid-template-rows: auto auto; }
+      .photo-main, .photo-sm { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="strip">Website Preview — Designed by Uplink Ads</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-logo">Warehouse <em>Frames</em> 'n Gallery</span>
+    <button class="drawer-close" onclick="closeMenu()">&#x2715;</button>
+  </div>
+  <ul class="drawer-links">
+    <li class="section-head"><a href="#about" onclick="closeMenu()">About Us</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Custom Framing</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Ready Made Frames</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Hand Carved Frames</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Oil Paintings</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Framed Mirrors</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Framed Art &amp; Prints</a></li>
+    <li><a href="#commercial" onclick="closeMenu()">Commercial</a></li>
+    <li><a href="#frames" onclick="closeMenu()">Accessories</a></li>
+    <li><a href="#contact" onclick="closeMenu()">FAQs</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact Us</a></li>
+  </ul>
+  <div class="drawer-cta">
+    <a href="tel:7139746000">(713) 974-6000 — Call Now</a>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="#" class="logo">Warehouse <em>Frames</em> 'n Gallery</a>
+  <ul class="desktop-links">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#frames">Frame Styles</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#commercial">Commercial</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:7139746000" class="nav-call">(713) 974-6000</a>
+    <button class="burger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- CATEGORY NAV -->
+<div class="catnav">
+  <div class="catnav-inner">
+    <a href="#about" class="catlink">About Us</a>
+    <a href="#frames" class="catlink active">Custom Framing</a>
+    <a href="#frames" class="catlink">Ready Made Frames</a>
+    <a href="#frames" class="catlink">Hand Carved Frames</a>
+    <a href="#frames" class="catlink">Oil Paintings</a>
+    <a href="#frames" class="catlink">Framed Mirrors</a>
+    <a href="#frames" class="catlink">Framed Art &amp; Prints</a>
+    <a href="#commercial" class="catlink">Commercial</a>
+    <a href="#frames" class="catlink">Accessories</a>
+    <a href="#contact" class="catlink">FAQs</a>
+    <a href="#contact" class="catlink">Contact Us</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-fade"></div>
+  <div class="hero-body">
+    <p class="eyebrow">Houston's Largest Frame Selection</p>
+    <h1 class="hero-h1">Every piece deserves<br>a <strong>perfect frame</strong></h1>
+    <p class="hero-p">Over 20,000 ready-made frames at factory direct prices — plus custom framing, hand-carved frames, oil paintings, and framed mirrors. All under one roof.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-gold">Visit the Showroom</a>
+      <a href="#frames" class="btn btn-ghost">See Frame Styles</a>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span class="stat-n">20,000+</span><span class="stat-l">Frames in Stock</span></div>
+    <div class="stat"><span class="stat-n">4,000+</span><span class="stat-l">Moulding Styles</span></div>
+    <div class="stat"><span class="stat-n">34,000 sqft</span><span class="stat-l">Across 2 Buildings</span></div>
+    <div class="stat"><span class="stat-n">27+ Yrs</span><span class="stat-l">Family Owned</span></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mtrack">
+    <span class="mitem">Ready-Made Frames &nbsp;·&nbsp;</span>
+    <span class="mitem">Custom Framing &nbsp;·&nbsp;</span>
+    <span class="mitem">Hand-Carved Frames &nbsp;·&nbsp;</span>
+    <span class="mitem">Oil Paintings &nbsp;·&nbsp;</span>
+    <span class="mitem">Framed Mirrors &nbsp;·&nbsp;</span>
+    <span class="mitem">Framed Art &amp; Prints &nbsp;·&nbsp;</span>
+    <span class="mitem">Commercial Projects &nbsp;·&nbsp;</span>
+    <span class="mitem">Open to Public &amp; Trade &nbsp;·&nbsp;</span>
+    <span class="mitem">5 Countries Sourced &nbsp;·&nbsp;</span>
+    <span class="mitem">Factory Direct &nbsp;·&nbsp;</span>
+    <span class="mitem">Houston TX &nbsp;·&nbsp;</span>
+    <span class="mitem">Ready-Made Frames &nbsp;·&nbsp;</span>
+    <span class="mitem">Custom Framing &nbsp;·&nbsp;</span>
+    <span class="mitem">Hand-Carved Frames &nbsp;·&nbsp;</span>
+    <span class="mitem">Oil Paintings &nbsp;·&nbsp;</span>
+    <span class="mitem">Framed Mirrors &nbsp;·&nbsp;</span>
+    <span class="mitem">Framed Art &amp; Prints &nbsp;·&nbsp;</span>
+    <span class="mitem">Commercial Projects &nbsp;·&nbsp;</span>
+    <span class="mitem">Open to Public &amp; Trade &nbsp;·&nbsp;</span>
+    <span class="mitem">5 Countries Sourced &nbsp;·&nbsp;</span>
+    <span class="mitem">Factory Direct &nbsp;·&nbsp;</span>
+    <span class="mitem">Houston TX &nbsp;·&nbsp;</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="photos">
+        <div class="photo-main"><img src="images/warehouseframes.jpg" alt="Warehouse Frames exterior" /></div>
+        <div class="photo-sm"><img src="images/img_fr1q20OS.jpg" alt="Frame moulding selection" /></div>
+        <div class="photo-sm"><img src="images/img_ctrqwRz1.jpg" alt="Frame selection close-up" /></div>
+      </div>
+      <div>
+        <p class="tag">Our Story</p>
+        <h2>Family owned.<br><span>Houston proud.</span></h2>
+        <p class="body" style="margin-bottom:1rem;">Founded by <span class="hl">Don and Teri Waheed</span>, Warehouse Frames 'n Gallery has grown into Houston's largest frame destination. Their sons <span class="hl">Mark and Gregg</span> have been an integral part of the business for over 25 years — and their hands-on approach shows in every visit.</p>
+        <p class="body" style="margin-bottom:1.5rem;">Today the business occupies over 34,000 sq ft across two buildings, with the main showroom at 3815 Fondren Road. We import container loads from five countries and maintain over 20,000 frames — all at factory direct prices.</p>
+        <div class="pill">
+          <div class="pill-n">27+</div>
+          <div class="pill-l">Years Serving<br>Greater Houston</div>
+        </div>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:1.8rem;">
+          <a href="#contact" class="btn btn-gold">Get Directions</a>
+          <a href="#frames" class="btn btn-ghost">See All Frames</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAME CATEGORIES -->
+<section class="sec sec-alt" id="frames">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:2.5rem;">
+      <p class="tag" style="justify-content:center;">What We Carry</p>
+      <h2 style="text-align:center;">Houston's largest selection<br>of <span>frame styles</span></h2>
+    </div>
+    <div class="cats">
+      <div class="cat">
+        <img class="cat-img" src="images/img_cuCLmCBw.jpg" alt="Hand carved frames" />
+        <div class="cat-body">
+          <div class="cat-n">01</div>
+          <div class="cat-title">Hand Carved Frames</div>
+          <p class="cat-desc">Ornate, museum-quality hand-carved frames for fine art and heirlooms that demand exceptional presentation.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/yelp_Kz2QWuqX.jpg" alt="Traditional frames" />
+        <div class="cat-body">
+          <div class="cat-n">02</div>
+          <div class="cat-title">Traditional Frames</div>
+          <p class="cat-desc">Classic profiles and warm finishes — timeless choices for portraits, family photos, and formal artwork.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/yelp_3Wt1KVrb.jpg" alt="Contemporary frames" />
+        <div class="cat-body">
+          <div class="cat-n">03</div>
+          <div class="cat-title">Contemporary Frames</div>
+          <p class="cat-desc">Clean lines and modern finishes for abstract art, photography, and minimalist interiors.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/yelp_hQh_7ES5.jpg" alt="Rustic frames" />
+        <div class="cat-body">
+          <div class="cat-n">04</div>
+          <div class="cat-title">Rustic &amp; Transitional</div>
+          <p class="cat-desc">Distressed wood and transitional profiles that blend traditional warmth with modern simplicity.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/img_Sd5m_kqV.jpg" alt="Framed mirrors" />
+        <div class="cat-body">
+          <div class="cat-n">05</div>
+          <div class="cat-title">Framed Mirrors</div>
+          <p class="cat-desc">Hundreds of framed mirrors in every style — ornate gilded to sleek modern. Ready for immediate purchase.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/yelp_TzaK4jk1.jpg" alt="Custom framing" />
+        <div class="cat-body">
+          <div class="cat-n">06</div>
+          <div class="cat-title">Custom Framing</div>
+          <p class="cat-desc">Over 4,000 moulding styles, 1,000+ in stock. Expert custom framing at 20–40% below typical retail.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/img_2JEu_ysN.jpg" alt="Oil paintings" />
+        <div class="cat-body">
+          <div class="cat-n">07</div>
+          <div class="cat-title">Oil Paintings</div>
+          <p class="cat-desc">A curated selection of original oil paintings in limited quantities. Come find the piece that speaks to your space.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+      <div class="cat">
+        <img class="cat-img" src="images/yelp_53Fbl4dX.jpg" alt="Oval and specialty frames" />
+        <div class="cat-body">
+          <div class="cat-n">08</div>
+          <div class="cat-title">Oval &amp; Specialty Frames</div>
+          <p class="cat-desc">Oval frames, Florentine styles, and specialty shapes for unique pieces and heirloom portraits.</p>
+          <span class="cat-line"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div>
+        <p class="tag">Why Choose Us</p>
+        <h2>Selection, value,<br>and <span>real expertise</span></h2>
+        <ul class="why-list">
+          <li class="why-row">
+            <svg class="why-ico" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C9A84C" stroke-width="1.5"/><path d="M6.5 10.5L8.5 12.5L13.5 7.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="why-t">Houston's Largest Selection</div><div class="why-d">20,000+ frames and 4,000+ moulding styles — more than any other frame shop in Greater Houston, all in one 34,000 sq ft complex.</div></div>
+          </li>
+          <li class="why-row">
+            <svg class="why-ico" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C9A84C" stroke-width="1.5"/><path d="M6.5 10.5L8.5 12.5L13.5 7.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="why-t">Factory Direct Pricing</div><div class="why-d">We import directly from 5 countries — no middleman. Custom moulding runs 20–40% below typical retail.</div></div>
+          </li>
+          <li class="why-row">
+            <svg class="why-ico" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C9A84C" stroke-width="1.5"/><path d="M6.5 10.5L8.5 12.5L13.5 7.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="why-t">The Waheed Family — 27 Years Strong</div><div class="why-d">Founded by Don and Teri Waheed. Sons Mark and Gregg run day-to-day. Not a chain — every customer gets family-level service.</div></div>
+          </li>
+          <li class="why-row">
+            <svg class="why-ico" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#C9A84C" stroke-width="1.5"/><path d="M6.5 10.5L8.5 12.5L13.5 7.5" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div><div class="why-t">Open to Public &amp; Trade</div><div class="why-d">Walk-ins always welcome. Interior designers and commercial buyers get dedicated attention. We ship nationwide.</div></div>
+          </li>
+        </ul>
+      </div>
+      <div class="boxes">
+        <div class="box feat"><div class="box-n">34,000 sqft</div><div class="box-l">Two-Building Showroom Complex</div></div>
+        <div class="box"><div class="box-n">20K+</div><div class="box-l">Frames in Stock</div></div>
+        <div class="box"><div class="box-n">5</div><div class="box-l">Countries Sourced</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sec sec-alt" id="gallery" style="padding-bottom:0;">
+  <div class="wrap" style="margin-bottom:2rem;">
+    <p class="tag">The Collection</p>
+    <h2>See it for <span>yourself</span></h2>
+  </div>
+  <div class="gal">
+    <div class="gi tall">
+      <img src="images/img_enJJXNp8.jpg" alt="Gallery collection" />
+      <div class="gc"><span>Gallery Collection</span></div>
+    </div>
+    <div class="gi">
+      <img src="images/yelp_sftnmwy-.jpg" alt="Showroom" />
+      <div class="gc"><span>Showroom</span></div>
+    </div>
+    <div class="gi">
+      <img src="images/yelp_UIu5lapp.jpg" alt="Frame selection" />
+      <div class="gc"><span>Frame Selection</span></div>
+    </div>
+    <div class="gi">
+      <img src="images/yelp_ouRhaIp8.jpg" alt="Oil paintings" />
+      <div class="gc"><span>Oil Paintings</span></div>
+    </div>
+    <div class="gi">
+      <img src="images/img_scXMWr61.jpg" alt="Custom framing" />
+      <div class="gc"><span>Custom Framing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL -->
+<section class="sec" id="commercial">
+  <div class="wrap">
+    <div class="comm-grid">
+      <div class="comm-wrap">
+        <img class="comm-img" src="images/img_YpiC3_iS.jpg" alt="Commercial showroom" />
+        <div class="comm-badge">
+          <div class="cb-n">5</div>
+          <div class="cb-l">Countries<br>Sourced</div>
+        </div>
+      </div>
+      <div>
+        <p class="tag">Commercial &amp; Trade</p>
+        <h2>Hotels, apartments,<br>and <span>home builders</span></h2>
+        <p class="body">Our commercial department specializes in large-scale framing and mirror projects for builders, developers, hotel groups, and apartment communities across Greater Houston.</p>
+        <ul class="comm-list">
+          <li class="comm-item">Apartment complexes &amp; multifamily developments</li>
+          <li class="comm-item">Hotel lobbies, rooms &amp; common areas</li>
+          <li class="comm-item">Home builders &amp; model homes</li>
+          <li class="comm-item">Interior designers &amp; decorators</li>
+          <li class="comm-item">Offices, restaurants &amp; retail spaces</li>
+          <li class="comm-item">Volume pricing &amp; dedicated account rep</li>
+        </ul>
+        <a href="#contact" class="btn btn-gold" style="margin-top:1.6rem;text-decoration:none;">Discuss Your Project</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="sec sec-alt" id="showroom">
+  <div class="wrap">
+    <div class="visit-grid">
+      <div>
+        <p class="tag">Come See Us</p>
+        <h2>A picture doesn't<br>do it <span>justice</span></h2>
+        <p class="body" style="margin-bottom:0.9rem;">Our 20,700 sq ft main showroom is stocked wall-to-wall — and that's just building one. No appointment needed. Just walk in.</p>
+        <p class="body" style="margin-bottom:1.6rem;">We serve Pearland, Sugar Land, Richmond, Galveston, and all of Greater Houston. We also ship nationwide for collectors and commercial clients.</p>
+        <a href="https://maps.google.com/?q=3815+Fondren+Rd+Houston+TX+77063" target="_blank" class="btn btn-gold" style="text-decoration:none;">Open in Google Maps</a>
+      </div>
+      <img class="visit-img" src="images/img_MqlVel6d.jpg" alt="Warehouse Frames showroom interior" />
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact">
+  <div class="wrap">
+    <div style="margin-bottom:2.5rem;">
+      <p class="tag">Get In Touch</p>
+      <h2>Visit us or<br>send a <span>message</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="cr">
+          <div class="cico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          <div><div class="clbl">Address</div><div class="cval"><a href="https://maps.google.com/?q=3815+Fondren+Rd+Houston+TX+77063" target="_blank">3815 Fondren Road<br>Houston, TX 77063</a></div></div>
+        </div>
+        <div class="cr">
+          <div class="cico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+          <div><div class="clbl">Phone</div><div class="cval"><a href="tel:7139746000">(713) 974-6000</a></div></div>
+        </div>
+        <div class="cr">
+          <div class="cico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <div>
+            <div class="clbl">Hours</div>
+            <div class="hours">
+              <span class="hday">Mon – Fri</span><span class="htime">10:00 AM – 6:00 PM</span>
+              <span class="hday">Saturday</span><span class="htime">10:00 AM – 5:00 PM</span>
+              <span class="hday">Sunday</span><span class="htime">Closed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-box">
+        <div class="form-title">Send us a message</div>
+        <div class="fg"><label class="fl">Your Name</label><input type="text" placeholder="John Smith" /></div>
+        <div class="fg"><label class="fl">Phone or Email</label><input type="text" placeholder="(713) 555-0100" /></div>
+        <div class="fg">
+          <label class="fl">What are you looking for?</label>
+          <select>
+            <option value="">Select a category...</option>
+            <option>Ready-Made Frames</option>
+            <option>Custom Framing</option>
+            <option>Hand-Carved Frames</option>
+            <option>Oil Paintings</option>
+            <option>Framed Mirrors</option>
+            <option>Framed Art &amp; Prints</option>
+            <option>Accessories</option>
+            <option>Commercial / Trade Account</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Message (optional)</label><textarea placeholder="Tell us about your project..."></textarea></div>
+        <button class="fsub">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP CTA -->
+<div class="mapcta">
+  <h2>Walk-ins always welcome</h2>
+  <p>No appointment needed. 34,000 sq ft of frames, mirrors, and art waiting for you.</p>
+  <a href="https://maps.google.com/?q=3815+Fondren+Rd+Houston+TX+77063" target="_blank" class="btn btn-black" style="text-decoration:none;">Get Directions</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-brand">Warehouse <em>Frames</em> 'n Gallery</div>
+  <div class="foot-copy">© 2026 Warehouse Frames 'n Gallery &nbsp;·&nbsp; 3815 Fondren Rd, Houston TX 77063 &nbsp;·&nbsp; (713) 974-6000</div>
+  <ul class="foot-links">
+    <li><a href="#frames">Frames</a></li>
+    <li><a href="#commercial">Commercial</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:7139746000">Call</a></li>
+  </ul>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const drawer = document.getElementById('drawer');
+    const burger = document.getElementById('burger');
+    const overlay = document.getElementById('overlay');
+    drawer.classList.toggle('open');
+    burger.classList.toggle('open');
+    overlay.classList.toggle('open');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+  }
+  function closeMenu() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('burger').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+</body>
+</html>
